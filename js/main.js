@@ -175,11 +175,17 @@ class AcademicSite {
 
     // Content Rendering
     renderContent() {
-        this.renderPersonalInfo();
-        this.renderAbout();
-        this.renderInterests();
-        this.renderNews();
-        this.renderSelectedPublications();
+        // Check if we're on the publications page
+        if (window.location.pathname.includes('publications.html')) {
+            this.initPublicationsPage();
+        } else {
+            // Home page content
+            this.renderPersonalInfo();
+            this.renderAbout();
+            this.renderInterests();
+            this.renderNews();
+            this.renderSelectedPublications();
+        }
     }
 
     renderPersonalInfo() {
