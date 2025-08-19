@@ -13,6 +13,7 @@ class AcademicSite {
 
     async init() {
         this.setupTheme();
+        this.setupImageLoading();
         await this.loadData();
         this.setupEventListeners();
         this.renderContent();
@@ -50,15 +51,58 @@ class AcademicSite {
         }
     }
 
-    // Data Loading
+    // Enhanced Image Loading with Intersection Observer
+    setupImageLoading() {
+        // Add loading enhancement for lazy-loaded images
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        
+        // Intersection Observer for better performance
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.addEventListener('load', function() {
+                        this.classList.add('loaded');
+                    });
+                    
+                    // If image is already loaded (cached)
+                    if (img.complete) {
+                        img.classList.add('loaded');
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => {
+            imageObserver.observe(img);
+        });
+        
+        // Handle eager-loaded images
+        const eagerImages = document.querySelectorAll('img[loading="eager"]');
+        eagerImages.forEach(img => {
+            img.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+            
+            // If image is already loaded (cached)
+            if (img.complete) {
+                img.classList.add('loaded');
+            }
+        });
+    }
+
+    // Enhanced Data Loading with retry mechanism
     async loadData() {
         try {
             console.log('Starting data load...');
             const basePath = window.location.pathname.includes('/pages/') ? '../' : '';
+            
+            // Load data with retry mechanism
             const [siteData, publicationsData, newsData] = await Promise.all([
-                this.fetchJSON(basePath + 'data/site.json'),
-                this.fetchJSON(basePath + 'data/publications.json'),
-                this.fetchJSON(basePath + 'data/news.json')
+                this.fetchJSONWithRetry(basePath + 'data/site.json'),
+                this.fetchJSONWithRetry(basePath + 'data/publications.json'),
+                this.fetchJSONWithRetry(basePath + 'data/news.json')
             ]);
 
             this.data.site = siteData;
@@ -73,7 +117,47 @@ class AcademicSite {
             console.log('Publications count:', publicationsData ? publicationsData.length : 0);
         } catch (error) {
             console.error('Error loading data:', error);
+            this.showErrorMessage('Failed to load website data. Please refresh the page.');
         }
+    }
+
+    async fetchJSONWithRetry(url, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.warn(`Attempt ${i + 1} failed for ${url}:`, error);
+                if (i === retries - 1) throw error;
+                // Wait before retry
+                await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
+            }
+        }
+    }
+
+    showErrorMessage(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        `;
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
+        
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
     }
 
     async fetchJSON(url) {
@@ -170,7 +254,11 @@ class AcademicSite {
         const interestsGrid = document.getElementById('interests-grid');
         if (interestsGrid && this.data.site && this.data.site.interests) {
             interestsGrid.innerHTML = this.data.site.interests
-                .map(interest => `<div class="interest-tag">${this.escapeHtml(interest)}</div>`)
+                .map(interest => `
+                    <div class="interest-item">
+                        <h3>${this.escapeHtml(interest)}</h3>
+                    </div>
+                `)
                 .join('');
         }
     }
@@ -406,8 +494,17 @@ class AcademicSite {
 
     // Interactive Features
     toggleAbstract(button) {
+        console.log('toggleAbstract called', button);
         const abstract = button.nextElementSibling;
+        console.log('Abstract element:', abstract);
+        
+        if (!abstract) {
+            console.error('Abstract element not found');
+            return;
+        }
+        
         const isShowing = abstract.classList.contains('show');
+        console.log('Is showing:', isShowing);
         
         if (isShowing) {
             abstract.classList.remove('show');
@@ -474,6 +571,38 @@ class AcademicSite {
             themeToggle.addEventListener('click', () => this.toggleTheme());
         }
 
+        // Smooth scrolling navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    anchor.classList.add('active');
+                }
+            });
+        });
+
+        // Mobile navigation toggle (if exists)
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.setAttribute('aria-expanded', 
+                    navToggle.getAttribute('aria-expanded') === 'true' ? 'false' : 'true'
+                );
+            });
+        }
+
         // System theme change detection
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
             if (!localStorage.getItem('theme')) {
@@ -481,11 +610,53 @@ class AcademicSite {
             }
         });
 
-        // Page-specific initialization
-        const currentPage = window.location.pathname;
-        if (currentPage.includes('publications.html')) {
-            this.initPublicationsPage();
-        }
+        // Intersection Observer for scroll-triggered animations
+        this.setupScrollAnimations();
+    }
+
+    setupScrollAnimations() {
+        // Create intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for fade-in effect
+        document.querySelectorAll('.section, .hero').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Add navigation highlight based on scroll position
+        const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+        const sections = document.querySelectorAll('section[id]');
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        sections.forEach(section => navObserver.observe(section));
     }
 
     // Utility Functions

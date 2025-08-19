@@ -33,10 +33,17 @@
     <!-- Preload critical resources -->
     <link rel="preload" href="css/styles.css" as="style">
     <link rel="preload" href="js/main.js" as="script">
+    <link rel="preload" href="img/profile.jpg" as="image">
+    <link rel="preload" href="libs/three.r134.min.js" as="script">
+    <link rel="preload" href="libs/vanta.fog.min.js" as="script">
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
 </head>
 <body>
     <!-- Skip to main content -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- <a href="#main-content" class="skip-link">Skip to main content</a> -->
     
     <!-- Header -->
     <header class="header">
@@ -45,13 +52,16 @@
                 <div class="nav-brand">
                     <a href="/" class="nav-brand-link" aria-label="Home" id="nav-brand-name">LE TRUNG LINH</a>
                 </div>
+                <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span>☰</span>
+                </button>
                 <ul class="nav-menu" role="menubar">
-                    <li role="none"><a href="/" class="nav-link" role="menuitem" aria-current="page">Home</a></li>
-                    <li role="none"><a href="pages/publications.html" class="nav-link" role="menuitem">Publications</a></li>
-                    <li role="none"><a href="pages/talks.html" class="nav-link" role="menuitem">Talks</a></li>
-                    <li role="none"><a href="pages/teaching.html" class="nav-link" role="menuitem">Teaching</a></li>
-                    <li role="none"><a href="pages/service.html" class="nav-link" role="menuitem">Service</a></li>
-                    <li role="none"><a href="pages/cv.html" class="nav-link" role="menuitem">CV</a></li>
+                    <li role="none"><a href="#home" class="nav-link" role="menuitem" aria-current="page">Home</a></li>
+                    <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
+                    <li role="none"><a href="#research" class="nav-link" role="menuitem">Research</a></li>
+                    <li role="none"><a href="#news" class="nav-link" role="menuitem">News</a></li>
+                    <li role="none"><a href="#publications" class="nav-link" role="menuitem">Publications</a></li>
+                    <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
                 </ul>
                 <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <span class="theme-toggle-icon">🌙</span>
@@ -63,11 +73,18 @@
     <!-- Main Content -->
     <main id="main-content" class="main">
         <!-- Hero Section -->
-        <section class="hero" id="hero-background">
+        <section class="hero" id="home">
+            <div class="hero-background" id="hero-background"></div>
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-avatar">
-                        <img src="img/profile.jpg" alt="Profile photo" class="avatar" id="profile-image">
+                        <img src="img/profile.jpg" 
+                             alt="Profile photo of LE TRUNG LINH, AI Researcher" 
+                             class="avatar" 
+                             id="profile-image"
+                             width="208" 
+                             height="208"
+                             loading="eager">
                     </div>
                     <div class="hero-text">
                         <h1 class="hero-title" id="hero-name">LE TRUNG LINH</h1>
@@ -114,7 +131,7 @@
         </section>
 
         <!-- About Section -->
-        <section class="section">
+        <section class="section" id="about">
             <div class="container">
                 <h2 class="section-title">About</h2>
                 <div class="about-content">
@@ -124,7 +141,7 @@
         </section>
 
         <!-- Research Interests -->
-        <section class="section">
+        <section class="section" id="research">
             <div class="container">
                 <h2 class="section-title">Research Interests</h2>
                 <div class="interests-grid" id="interests-grid">
@@ -134,7 +151,7 @@
         </section>
 
         <!-- News Section -->
-        <section class="section">
+        <section class="section" id="news">
             <div class="container">
                 <h2 class="section-title">News</h2>
                 <div class="news-list" id="news-list">
@@ -232,20 +249,20 @@
         </section>
 
         <!-- Publications -->
-        <section class="section">
+        <section class="section" id="publications">
             <div class="container">
                 <h2 class="section-title">Publications</h2>
                 <div class="publications-list" id="selected-publications">
                     <!-- Populated by JavaScript -->
                 </div>
                 <div class="text-center">
-                    <a href="pages/publications.html" class="btn btn-primary">View All Publications</a>
+                    <a href="#publications" class="btn btn-primary">View All Publications</a>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section class="section">
+        <section class="section" id="contact">
             <div class="container">
                 <h2 class="section-title">Contact</h2>
                 <div class="contact-info">
@@ -266,29 +283,62 @@
 
     <!-- Scripts -->
     <script src="libs/three.r134.min.js"></script>
-    <script src="libs/vanta.halo.min.js"></script>
+    <script src="libs/vanta.fog.min.js"></script>
     <script src="js/main.js"></script>
     
-    <!-- 3D Background -->
+    <!-- Enhanced 3D Background with Error Handling -->
     <script>
         // Initialize Vanta.js background after DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if required libraries are loaded
+            if (typeof THREE === 'undefined' || typeof VANTA === 'undefined') {
+                console.warn('3D background libraries not loaded, skipping background animation');
+                return;
+            }
+            
+            // Check for reduced motion preference
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                console.log('Reduced motion detected, skipping 3D background');
+                return;
+            }
+            
             // Wait a bit for other scripts to load
             setTimeout(function() {
-                VANTA.HALO({
-                    el: "#hero-background",
-                    mouseControls: true,
-                    touchControls: true,
-                    gyroControls: false,
-                    minHeight: 200.00,
-                    minWidth: 200.00,
-                    baseColor: 0x5929ff,
-                    backgroundColor: 0x0,
-                    amplitudeFactor: 1.0,
-                    xOffset: 0.15,
-                    yOffset: 0.03,
-                    size: 1.5
-                });
+                try {
+                    const vantaEffect = VANTA.FOG({
+                        el: "#hero-background",
+                        mouseControls: true,
+                        touchControls: true,
+                        gyroControls: false,
+                        minHeight: 200.00,
+                        minWidth: 200.00,
+                        highlightColor: 0x7a6982,
+                        midtoneColor: 0xaf0c3f,
+                        lowlightColor: 0x8416c5,
+                        baseColor: 0xddd0e6,
+                        blurFactor: 0.7,
+                        speed: 1.5,
+                        zoom: 1.0
+                    });
+                    
+                    // Handle window resize
+                    window.addEventListener('resize', () => {
+                        if (vantaEffect) {
+                            vantaEffect.resize();
+                        }
+                    });
+                    
+                    // Clean up on page unload
+                    window.addEventListener('beforeunload', () => {
+                        if (vantaEffect) {
+                            vantaEffect.destroy();
+                        }
+                    });
+                    
+                    console.log('3D background initialized successfully');
+                } catch (error) {
+                    console.error('Failed to initialize 3D background:', error);
+                }
             }, 100);
         });
     </script>
