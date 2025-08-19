@@ -1,0 +1,11 @@
+# Placeholder Profile Image
+
+This is a placeholder for your profile photo. Replace this file with your actual profile image.
+
+To update your profile photo:
+1. Use a high-quality image (300x300px recommended, square ratio)
+2. Supported formats: JPG, PNG, WebP
+3. Name it `profile.jpg` (or update the path in HTML files if using a different name)
+4. Replace this placeholder file
+
+The image will be displayed on the homepage and used in social media previews.

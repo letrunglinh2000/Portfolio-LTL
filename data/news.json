@@ -1,0 +1,34 @@
+[
+  {
+    "date": "2025-08-01",
+    "text": "Paper accepted at ICLR 2025: \"Robust Alignment of Large Language Models through Constitutional AI\""
+  },
+  {
+    "date": "2025-07-15",
+    "text": "Invited to speak at the AI Safety Workshop at ICML 2025"
+  },
+  {
+    "date": "2025-06-10",
+    "text": "Released code and dataset for our multi-agent reinforcement learning framework"
+  },
+  {
+    "date": "2025-05-20",
+    "text": "Started as a visiting researcher at Your Partner Institution"
+  },
+  {
+    "date": "2025-04-03",
+    "text": "Paper on interpretable decision-making accepted at UAI 2025"
+  },
+  {
+    "date": "2025-03-12",
+    "text": "Awarded the Young Researcher Grant for AI Safety research"
+  },
+  {
+    "date": "2025-02-28",
+    "text": "Presented our work on LLM robustness at the AI Alignment Conference"
+  },
+  {
+    "date": "2025-01-15",
+    "text": "New preprint available: \"Scaling Laws for Constitutional AI Training\""
+  }
+]

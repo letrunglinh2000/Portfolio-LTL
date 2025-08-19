@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://YOURUSERNAME.github.io/sitemap.xml
+
+# Common crawl-delay to be respectful
+Crawl-delay: 1
+
+# Disallow common non-content paths
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /node_modules/
+Disallow: /*.log
+
+# Allow all content pages
+Allow: /
+Allow: /pages/
+Allow: /css/
+Allow: /js/
+Allow: /img/
+Allow: /files/
+Allow: /data/

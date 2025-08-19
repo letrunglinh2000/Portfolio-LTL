@@ -1,0 +1,23 @@
+{
+  "name": "LE TRUNG LINH",
+  "title": "AI Researcher",
+  "affiliation": "IVCL Lab / Sejong University",
+  "email": "you@example.com",
+  "location": "Seoul, South Korea",
+  "social": {
+    "scholar": "https://scholar.google.com/citations?user=XXXX",
+    "github": "https://github.com/YOURUSER",
+    "x": "https://twitter.com/YOURUSER",
+    "linkedin": "https://www.linkedin.com/in/YOURUSER",
+    "orcid": "https://orcid.org/0000-0000-0000-0000"
+  },
+  "interests": [
+    "Large Language Models",
+    "RL and Decision Making",
+    "Robustness / Safety / Interpretability",
+    "Multi-Agent Systems",
+    "Natural Language Processing",
+    "Computer Vision"
+  ],
+  "about": "I am a passionate AI researcher focusing on developing safe and interpretable artificial intelligence systems. My work spans large language models, reinforcement learning, and multi-agent systems, with particular emphasis on robustness and safety. I am committed to advancing the field while ensuring AI systems remain beneficial and aligned with human values."
+}

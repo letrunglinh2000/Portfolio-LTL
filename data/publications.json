@@ -1,0 +1,83 @@
+[
+  {
+    "title": "Robust Alignment of Large Language Models through Constitutional AI",
+    "authors": ["LE TRUNG LINH", "Coauthor A", "Coauthor B"],
+    "venue": "ICLR",
+    "year": 2025,
+    "links": {
+      "pdf": "files/constitutional_ai_2025.pdf",
+      "code": "https://github.com/YOURUSER/constitutional-ai",
+      "arxiv": "https://arxiv.org/abs/2501.12345",
+      "doi": "https://doi.org/10.1000/12345"
+    },
+    "tags": ["LLMs", "Safety", "Alignment"],
+    "abstract": "We present a novel approach to aligning large language models with human values through constitutional AI training. Our method incorporates multi-layered safety constraints during the training process, resulting in models that are both capable and aligned. We demonstrate significant improvements in safety metrics while maintaining performance on downstream tasks. The approach scales effectively to models with hundreds of billions of parameters and shows promise for future safe AI development."
+  },
+  {
+    "title": "Interpretable Decision-Making in Multi-Agent Reinforcement Learning",
+    "authors": ["Coauthor C", "LE TRUNG LINH", "Coauthor D"],
+    "venue": "UAI",
+    "year": 2025,
+    "links": {
+      "pdf": "files/interpretable_marl_2025.pdf",
+      "code": "https://github.com/YOURUSER/interpretable-marl",
+      "arxiv": "https://arxiv.org/abs/2505.67890"
+    },
+    "tags": ["RL", "Multi-Agent", "Interpretability"],
+    "abstract": "Understanding decision-making processes in multi-agent systems is crucial for deploying RL agents in real-world scenarios. We introduce a framework for interpretable multi-agent reinforcement learning that provides human-understandable explanations for agent actions. Our approach combines attention mechanisms with causal reasoning to identify key factors influencing agent decisions in complex multi-agent environments."
+  },
+  {
+    "title": "Scaling Laws for Constitutional AI Training",
+    "authors": ["LE TRUNG LINH", "Coauthor E"],
+    "venue": "arXiv preprint",
+    "year": 2025,
+    "links": {
+      "arxiv": "https://arxiv.org/abs/2501.11111",
+      "code": "https://github.com/YOURUSER/scaling-constitutional-ai"
+    },
+    "tags": ["LLMs", "Safety", "Scaling"],
+    "abstract": "We investigate how constitutional AI training scales with model size, compute, and dataset size. Our empirical study reveals novel scaling laws that govern the relationship between safety alignment and model capability. These findings provide crucial insights for training the next generation of safe and capable AI systems."
+  },
+  {
+    "title": "Robust Policy Learning under Distribution Shift",
+    "authors": ["Coauthor F", "LE TRUNG LINH", "Coauthor G", "Coauthor H"],
+    "venue": "NeurIPS",
+    "year": 2024,
+    "links": {
+      "pdf": "files/robust_policy_2024.pdf",
+      "code": "https://github.com/YOURUSER/robust-policy-learning",
+      "arxiv": "https://arxiv.org/abs/2410.98765",
+      "slides": "files/robust_policy_slides.pdf"
+    },
+    "tags": ["RL", "Robustness", "Distribution Shift"],
+    "abstract": "Real-world deployment of reinforcement learning agents often faces significant distribution shifts between training and test environments. We propose a novel approach to robust policy learning that maintains performance across diverse environmental conditions. Our method combines domain randomization with adversarial training to create policies that generalize effectively to unseen scenarios."
+  },
+  {
+    "title": "Federated Learning for Privacy-Preserving AI Alignment",
+    "authors": ["LE TRUNG LINH", "Coauthor I", "Coauthor J"],
+    "venue": "ICML",
+    "year": 2024,
+    "links": {
+      "pdf": "files/federated_alignment_2024.pdf",
+      "code": "https://github.com/YOURUSER/federated-alignment",
+      "arxiv": "https://arxiv.org/abs/2407.54321",
+      "video": "https://youtube.com/watch?v=example"
+    },
+    "tags": ["Federated Learning", "Privacy", "Alignment"],
+    "abstract": "Aligning AI systems with diverse human values while preserving privacy presents unique challenges. We introduce a federated learning framework for AI alignment that enables collaborative training without sharing sensitive data. Our approach demonstrates that effective alignment can be achieved while maintaining strong privacy guarantees across distributed participants."
+  },
+  {
+    "title": "Emergent Communication in Multi-Agent Deep Reinforcement Learning",
+    "authors": ["Coauthor K", "Coauthor L", "LE TRUNG LINH"],
+    "venue": "ICLR",
+    "year": 2024,
+    "links": {
+      "pdf": "files/emergent_communication_2024.pdf",
+      "code": "https://github.com/YOURUSER/emergent-communication",
+      "arxiv": "https://arxiv.org/abs/2402.13579",
+      "demo": "https://emergent-comm-demo.github.io"
+    },
+    "tags": ["Multi-Agent", "Communication", "RL"],
+    "abstract": "We study the emergence of communication protocols in multi-agent reinforcement learning environments. Our research reveals how agents spontaneously develop sophisticated communication strategies to coordinate their actions and achieve common goals. The resulting communication protocols show remarkable similarity to natural language structures, providing insights into the origins of language and cooperation."
+  }
+]
