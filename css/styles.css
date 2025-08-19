@@ -84,7 +84,8 @@ body {
     --space-md: 2rem;
     --space-lg: 3rem;
     --space-xl: 4rem;
-    
+    --space-subpage_title: 5rem;
+
     /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -602,8 +603,57 @@ img[loading="eager"] {
     position: relative;
     z-index: 2;
     will-change: transform;
+    animation: heartbeat-smooth 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
+/* Smoother heartbeat animation with more natural timing */
+@keyframes heartbeat-smooth {
+    0%, 100% {
+        transform: scale(1);
+    }
+    15% {
+        transform: scale(1.02);
+    }
+    30% {
+        transform: scale(1.06);
+    }
+    45% {
+        transform: scale(1.08);
+    }
+    60% {
+        transform: scale(1.06);
+    }
+    75% {
+        transform: scale(1.02);
+    }
+    90% {
+        transform: scale(1);
+    }
+}
+
+/* Alternative: Subtle breathing effect that might work better with the glass theme */
+@keyframes heartbeat-subtle {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: var(--glass-shadow-hover);
+    }
+    20% {
+        transform: scale(1.01);
+        box-shadow: var(--glass-shadow-hover), 0 0 5px var(--primary-glow);
+    }
+    40% {
+        transform: scale(1.025);
+        box-shadow: var(--glass-shadow-hover), 0 0 10px var(--primary-glow);
+    }
+    60% {
+        transform: scale(1.03);
+        box-shadow: var(--glass-shadow-hover), 0 0 15px var(--primary-glow);
+    }
+    80% {
+        transform: scale(1.01);
+        box-shadow: var(--glass-shadow-hover), 0 0 8px var(--primary-glow);
+    }
+}
 /* Image loading states */
 .image-loading {
     background: var(--glass-bg);
@@ -1823,3 +1873,4 @@ a:hover, button:hover, .btn:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
+

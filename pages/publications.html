@@ -24,22 +24,25 @@
 </head>
 <body>
     <!-- Skip to main content -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <!-- <a href="#main-content" class="skip-link">Skip to main content</a> -->
     
-    <!-- Header -->
+    <!-- Update the navigation in publications.html -->
     <header class="header">
         <div class="container">
             <nav class="nav" role="navigation" aria-label="Main navigation">
                 <div class="nav-brand">
-                    <a href="../" class="nav-brand-link" aria-label="Home">LE TRUNG LINH</a>
+                    <a href="../index.html" class="nav-brand-link" aria-label="Home" id="nav-brand-name">LE TRUNG LINH</a>
                 </div>
+                <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <span>☰</span>
+                </button>
                 <ul class="nav-menu" role="menubar">
-                    <li role="none"><a href="../" class="nav-link" role="menuitem">Home</a></li>
+                    <li role="none"><a href="../index.html#home" class="nav-link" role="menuitem">Home</a></li>
+                    <li role="none"><a href="../index.html#about" class="nav-link" role="menuitem">About</a></li>
+                    <li role="none"><a href="../index.html#research" class="nav-link" role="menuitem">Research</a></li>
+                    <li role="none"><a href="../index.html#news" class="nav-link" role="menuitem">News</a></li>
                     <li role="none"><a href="publications.html" class="nav-link" role="menuitem" aria-current="page">Publications</a></li>
-                    <li role="none"><a href="talks.html" class="nav-link" role="menuitem">Talks</a></li>
-                    <li role="none"><a href="teaching.html" class="nav-link" role="menuitem">Teaching</a></li>
-                    <li role="none"><a href="service.html" class="nav-link" role="menuitem">Service</a></li>
-                    <li role="none"><a href="cv.html" class="nav-link" role="menuitem">CV</a></li>
+                    <li role="none"><a href="../index.html#contact" class="nav-link" role="menuitem">Contact</a></li>
                 </ul>
                 <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <span class="theme-toggle-icon">🌙</span>
@@ -55,7 +58,7 @@
                 <h1 class="section-title">Publications</h1>
                 
                 <!-- Search and Filters with Glass Styling -->
-                <div class="search-filters glass-card">
+                <!-- <div class="search-filters glass-card">
                     <input 
                         type="text" 
                         id="search-input" 
@@ -79,7 +82,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Publications List -->
                 <div id="publications-list" class="publications-list">
